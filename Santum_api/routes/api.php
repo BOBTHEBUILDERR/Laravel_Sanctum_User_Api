@@ -2,10 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\LogoutController;
 use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\API\ChangePasswordController;
 use App\Http\Controllers\API\ProfileUpdateController;
+use App\Http\Controllers\API\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
      return 'hello';
     });
     Route::any('change_password',[APIController::class,'changePassword']);
-    Route::post('logout',[APIController::class,'logout']);
+    Route::post('logout',[LogoutController::class,'logout']);
     Route::post('tokens_delete',[APIController::class,'logoutAll']);
     Route::post('profile',[APIController::class,'profileUpdate']);
     Route::post('profile-pic', [APIController::class,'updateProfilePic']);
@@ -35,8 +38,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('get-user', [APIController::class,'get_user']);
  
  });
- Route::any('signup',[APIController::class,'signup']);
- Route::any('login',[APIController::class,'login'])->name('login');
+ Route::any('signup',[RegisterController::class,'register']);
+ Route::any('login',[LoginController::class,'login'])->name('login');
  // Route::any('forget_password',[APIController::class,'submitForgetPasswordForm']);
  // Route::any('/password/reset', [APIController::class,'resetPassword'])->name('password.reset');
  Route::any('reset_password', [APIController::class,'apiReset']);
