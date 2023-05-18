@@ -20,7 +20,7 @@ class APIController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         return $request->user();
     }
 
     /**

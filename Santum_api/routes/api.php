@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('tokens_delete',[APIController::class,'logoutAll']);
     Route::post('profile',[APIController::class,'profileUpdate']);
     Route::post('profile-pic', [APIController::class,'updateProfilePic']);
-    Route::post('profile-get', [APIController::class,'profile_get']);
+    Route::post('profile-get', [APIController::class,'show']);
     Route::get('get-links', [APIController::class,'links']);
     Route::get('get-user', [APIController::class,'get_user']);
  
