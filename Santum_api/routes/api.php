@@ -2,7 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\APIController;
+use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\ResetPasswordController;
+use App\Http\Controllers\API\ChangePasswordController;
+use App\Http\Controllers\API\ProfileUpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +41,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
  // Route::any('/password/reset', [APIController::class,'resetPassword'])->name('password.reset');
  Route::any('reset_password', [APIController::class,'apiReset']);
  Route::any('reset', [APIController::class,'apiSendResetLinkEmail'])->name('password.reset');
- 
+ Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+    return ['token' => $token->plainTextToken];
+});
