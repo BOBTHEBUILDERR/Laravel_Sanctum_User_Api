@@ -26,7 +26,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::group(['middleware' => 'auth:sanctum'], function(){
     //For Getting Data
-    Route::get('get-links', [HomeController::class,'links']);
     Route::get('get-user', [LoginController::class,'get_user']);
     Route::post('profile-get', [ProfileUpdateController::class,'profile_get']);
     //For Changes
