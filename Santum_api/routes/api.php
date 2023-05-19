@@ -25,26 +25,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => 'auth:sanctum'], function(){
-    Route::get('test',function(){
-     return 'hello';
-    });
-    Route::any('change_password',[APIController::class,'changePassword']);
+    //For Getting Data
+    Route::get('get-links', [HomeController::class,'links']);
+    Route::get('get-user', [LoginController::class,'get_user']);
+    Route::post('profile-get', [ProfileUpdateController::class,'profile_get']);
+    //For Changes
+    Route::post('profile-pic', [ProfileUpdateController::class,'updateProfilePic']);
+    Route::post('profile',[ProfileUpdateController::class,'profileUpdate']);
+    Route::any('change_password',[ChangePasswordController::class,'changePassword']);
     Route::post('logout',[LogoutController::class,'logout']);
-    Route::post('tokens_delete',[APIController::class,'logoutAll']);
-    Route::post('profile',[APIController::class,'profileUpdate']);
-    Route::post('profile-pic', [APIController::class,'updateProfilePic']);
-    Route::post('profile-get', [APIController::class,'show']);
-    Route::get('get-links', [APIController::class,'links']);
-    Route::get('get-user', [APIController::class,'get_user']);
- 
+    Route::delete('tokens_delete',[LogoutController::class,'logoutAll']);
+
  });
+
+ /* Authentication */
  Route::any('signup',[RegisterController::class,'register']);
  Route::any('login',[LoginController::class,'login'])->name('login');
- // Route::any('forget_password',[APIController::class,'submitForgetPasswordForm']);
- // Route::any('/password/reset', [APIController::class,'resetPassword'])->name('password.reset');
- Route::any('reset_password', [APIController::class,'apiReset']);
- Route::any('reset', [APIController::class,'apiSendResetLinkEmail'])->name('password.reset');
- Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-    return ['token' => $token->plainTextToken];
-});
+
+ /* Reset */
+ Route::any('reset_password', [ResetPasswordController::class,'apiReset']);
+ Route::any('reset', [ResetPasswordController::class,'apiSendResetLinkEmail'])->name('password.reset');
+
+

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class LoginController extends Controller
@@ -25,6 +25,7 @@ class LoginController extends Controller
         $user = Auth::user();
         $token = $user->createToken('auth_token')->plainTextToken;
 
+
         return response()->json([
             'status' => 201,
             'token' => $token,
@@ -36,5 +37,23 @@ class LoginController extends Controller
             'message' => 'Log In Failed',
         ], 404);
         }
+    }
+    public function get_user(Request $request){
+        $user = $request->user();
+        if($user){
+            $data = [
+                'status' => 201,
+                'message' => 'User details',
+                'data' => $user,
+
+            ];
+            return response()->json($data, 201);
+
+        }else{
+        return response()->json(['User Not Found'], 404);
+
+        }
+
+
     }
 }
